@@ -1,6 +1,7 @@
 "use client";
 
 import NavBar from "@/components/NavBar";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import TicketsBoard from "@/components/TicketsBoard";
 
 /**
@@ -8,9 +9,11 @@ import TicketsBoard from "@/components/TicketsBoard";
  */
 export default function AdminTicketsPage() {
   return (
-    <main className="mx-auto max-w-6xl p-3 sm:p-4 md:p-6">
-      <NavBar />
-      <TicketsBoard />
-    </main>
+    <ThemeProvider>
+      <main className="mx-auto max-w-6xl p-3 sm:p-4 md:p-6">
+        <NavBar />
+        <TicketsBoard />
+      </main>
+    </ThemeProvider>
   );
 }
