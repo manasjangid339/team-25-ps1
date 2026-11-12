@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { href: "/", label: "Support chat" },
   { href: "/orders", label: "My Orders" },
   { href: "/returns", label: "My Returns" },
+  { href: "/admin/tickets", label: "Tickets" },
 ];
 
 /**

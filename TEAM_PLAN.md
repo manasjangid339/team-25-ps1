@@ -135,7 +135,7 @@ git config user.email "<email linked to your GitHub account>"
 - [x] **S5 Phone check**
   > Review @app/page.tsx, @app/orders/page.tsx, @app/returns/page.tsx and the components they use for a 360px wide phone screen. Fix anything that overflows or is hard to tap (min 40px tap targets, chat input always visible).
   Commit: `"Mobile layout fixes"`.
-- [ ] **S6 Stretch: ticket admin page** · Needs: Haavish S4 (only if time before 2:45)
+- [x] **S6 Stretch: ticket admin page** · Needs: Haavish S4 (only if time before 2:45)
   > Create app/admin/tickets/page.tsx and components/TicketsBoard.tsx: list from GET /api/tickets with issue, order id, priority badge, status, created date, and a status dropdown that calls PATCH /api/tickets then reloads. Add "Tickets" to NavBar.
   Commit: `"Add ticket admin page"`.
 
