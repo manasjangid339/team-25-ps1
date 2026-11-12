@@ -123,7 +123,7 @@ git config user.email "<email linked to your GitHub account>"
   > 3. In @components/AgentChat.tsx set SAMPLE_PROMPTS to: "Where is my order 1003?", "I want to return the shoes from my last order, they are too small.", "My order is 4 days late and nobody is answering."
   > Use Tailwind only. Must work on a 360px phone. Never import lib/supabase or lib/agent in components.
   Commit: `"Add orders list and home page"`.
-- [ ] **S2 Header nav + My Orders page**
+- [x] **S2 Header nav + My Orders page**
   > Create components/NavBar.tsx with links Support chat (/), My Orders (/orders), My Returns (/returns) and the existing Log out button; use it in @app/page.tsx. Create app/orders/page.tsx showing NavBar and OrdersList full width.
   Commit: `"Add nav and My Orders page"`.
 - [ ] **S3 My Returns page** · Needs: Haavish S3
