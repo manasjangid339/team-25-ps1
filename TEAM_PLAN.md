@@ -79,7 +79,7 @@ git config user.email "<email linked to your GitHub account>"
   > - checkReturnEligibility: args order_id (int) and product_id (string, "product id like P101"). Calls checkReturnRule from lib/rules.ts and returns { eligible, reason, last_return_date }.
   > Set the tools array to these 3 tools.
   **Needs:** Haavish S1. Test: "Where is my order 1003?" shows the tool box. Commit: `"Add read tools"`.
-- [ ] **S3 Write tool createReturnRequest**
+- [x] **S3 Write tool createReturnRequest**
   > In @lib/agent/tools.ts add write tool createReturnRequest (writes: true). Args: order_id (int positive), product_id (string), reason (string min 3 max 300, "why the customer is returning it"). First call checkReturnRule from lib/rules.ts; if not eligible throw new Error(reason). If eligible insert into returns { order_id, product_id, reason } (status defaults to requested) and return { return_id, order_id, product_id, status }. Description: "Use this when the customer clearly asks to return a product from a delivered order. Call getOrderDetails first to get the real product_id." Add it to the tools array.
   Test: return shoes from a delivered order works; a non-returnable or out-of-window item is refused with the reason. Commit: `"Add createReturnRequest write tool"`.
 - [ ] **S4 Write tool escalateToHuman**

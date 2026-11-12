@@ -108,5 +108,47 @@ export const checkReturnEligibility = defineTool({
   },
 });
 
+export const createReturnRequest = defineTool({
+  name: "createReturnRequest",
+  description:
+    "Use this when the customer clearly asks to return a product from a delivered order. Call getOrderDetails first to get the real product_id.",
+  writes: true,
+  schema: z.object({
+    order_id: z.number().int().positive().describe("Order ID, for example 1003"),
+    product_id: z.string().describe("Product ID like P101"),
+    reason: z
+      .string()
+      .min(3)
+      .max(300)
+      .describe("why the customer is returning it"),
+  }),
+  run: async ({ order_id, product_id, reason }) => {
+    const eligibility = await checkReturnRule(order_id, product_id);
+    if (!eligibility.eligible) {
+      throw new Error(eligibility.reason);
+    }
+
+    const { data, error } = await getSupabase()
+      .from("returns")
+      .insert({ order_id, product_id, reason })
+      .select("id, order_id, product_id, status")
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    return {
+      return_id: data.id,
+      order_id: data.order_id,
+      product_id: data.product_id,
+      status: data.status,
+    };
+  },
+});
+
 /** Every tool in this list is given to Gemini. */
-export const tools: AgentTool[] = [getMyOrders, getOrderDetails, checkReturnEligibility];
+export const tools: AgentTool[] = [
+  getMyOrders,
+  getOrderDetails,
+  checkReturnEligibility,
+  createReturnRequest,
+];
