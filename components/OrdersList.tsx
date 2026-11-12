@@ -82,7 +82,7 @@ export default function OrdersList({ refreshKey }: { refreshKey: number }) {
   }, [refreshKey]);
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white">
+    <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
       <div className="border-b border-slate-200 px-4 py-3">
         <h2 className="font-semibold">My Orders</h2>
         <p className="text-xs text-slate-500">Live from Supabase. Updates when the agent changes data.</p>

@@ -132,7 +132,7 @@ git config user.email "<email linked to your GitHub account>"
 - [x] **S4 Show what the agent did**
   > In @components/AgentChat.tsx make sure every tool step is visible: tool name, a green "writes" badge for write tools, red text if the step failed, and expandable args/result. Do not change how the API is called.
   Commit: `"Improve agent step display"`.
-- [ ] **S5 Phone check**
+- [x] **S5 Phone check**
   > Review @app/page.tsx, @app/orders/page.tsx, @app/returns/page.tsx and the components they use for a 360px wide phone screen. Fix anything that overflows or is hard to tap (min 40px tap targets, chat input always visible).
   Commit: `"Mobile layout fixes"`.
 - [ ] **S6 Stretch: ticket admin page** · Needs: Haavish S4 (only if time before 2:45)

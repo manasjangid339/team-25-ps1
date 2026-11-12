@@ -21,15 +21,15 @@ export default function NavBar() {
   }
 
   return (
-    <header className="mb-4 space-y-3 border-b border-slate-200 pb-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="min-w-0">
-          <h1 className="text-lg font-semibold sm:text-xl">ShopEase · Customer support agent</h1>
-          <p className="text-sm text-slate-500">Logged in as Priya Raman (C001)</p>
+    <header className="mb-3 space-y-2.5 border-b border-slate-200 pb-3 sm:mb-4 sm:space-y-3">
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-base font-semibold leading-snug sm:text-xl">ShopEase · Customer support agent</h1>
+          <p className="text-xs text-slate-500 sm:text-sm">Logged in as Priya Raman (C001)</p>
         </div>
         <button
           onClick={logout}
-          className="min-h-[44px] shrink-0 rounded-lg px-3 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+          className="min-h-[44px] shrink-0 rounded-lg px-3 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
         >
           Log out
         </button>

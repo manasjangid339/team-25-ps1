@@ -52,7 +52,7 @@ export default function AgentChat({ onDataChanged }: { onDataChanged?: () => voi
   }
 
   return (
-    <div className="flex h-[68dvh] min-h-[380px] flex-col rounded-xl border border-slate-200 bg-white md:h-[70vh]">
+    <div className="flex h-[62dvh] min-h-[340px] max-h-[560px] flex-col overflow-hidden rounded-xl border border-slate-200 bg-white md:h-[70vh] md:max-h-none">
       <div className="border-b border-slate-200 px-4 py-3">
         <h2 className="font-semibold">Agent</h2>
         <p className="text-xs text-slate-500">Ask in plain English. You can see every tool the agent uses.</p>
@@ -132,11 +132,11 @@ function ToolSteps({ steps }: { steps: AgentStep[] }) {
           key={i}
           className={
             s.ok
-              ? "rounded-lg border border-slate-200 bg-slate-50 px-3 py-1 text-xs"
-              : "rounded-lg border border-red-200 bg-red-50 px-3 py-1 text-xs text-red-700"
+              ? "min-w-0 max-w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-50 px-3 py-1 text-xs"
+              : "min-w-0 max-w-full overflow-hidden rounded-lg border border-red-200 bg-red-50 px-3 py-1 text-xs text-red-700"
           }
         >
-          <summary className="cursor-pointer select-none py-2 leading-5 break-words">
+          <summary className="cursor-pointer select-none py-2.5 leading-5 break-words">
             <span className={s.ok ? "font-medium text-emerald-700" : "font-medium text-red-700"}>
               {s.ok ? "Done" : "Failed"}
             </span>
