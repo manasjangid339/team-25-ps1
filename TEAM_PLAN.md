@@ -126,7 +126,7 @@ git config user.email "<email linked to your GitHub account>"
 - [x] **S2 Header nav + My Orders page**
   > Create components/NavBar.tsx with links Support chat (/), My Orders (/orders), My Returns (/returns) and the existing Log out button; use it in @app/page.tsx. Create app/orders/page.tsx showing NavBar and OrdersList full width.
   Commit: `"Add nav and My Orders page"`.
-- [ ] **S3 My Returns page** · Needs: Haavish S3
+- [x] **S3 My Returns page** · Needs: Haavish S3
   > Create components/ReturnsList.tsx (same pattern) from /api/returns: return id, order id, product name, reason, date, status badge (requested amber, approved blue, picked_up indigo, refunded green, rejected red). Create app/returns/page.tsx with NavBar and ReturnsList. Also show ReturnsList under OrdersList on the home page so a new return appears right after the agent creates it.
   Commit: `"Add My Returns page"`.
 - [ ] **S4 Show what the agent did**
