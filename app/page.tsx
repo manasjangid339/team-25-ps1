@@ -10,11 +10,11 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 /*
  * HOME PAGE
- * Single-screen workspace on desktop (no main page scrollbar; independent sub-scrollers
- * for Chat, My Orders, and My Returns). Mobile stacks cleanly with a Back-to-Chat push button.
+ * Full-width single-screen 3-column workspace on desktop (Chat · My Orders · My Returns)
+ * with no main page scrollbar and generous independent sub-scrollers.
  */
 export default function HomePage() {
-  // Changes every time the agent writes data, so the lists on the right reload.
+  // Changes every time the agent writes data, so the lists reload.
   const [refreshKey, setRefreshKey] = useState(0);
   const [queuedPrompt, setQueuedPrompt] = useState<QueuedPrompt | null>(null);
   const [chatHighlighted, setChatHighlighted] = useState(false);
@@ -37,12 +37,15 @@ export default function HomePage() {
   return (
     <ThemeProvider>
       <AppToastContainer notifications={notifications} onDismiss={dismiss} />
-      <main className="mx-auto max-w-6xl p-3 sm:p-4 md:flex md:h-dvh md:flex-col md:overflow-hidden md:p-5">
+      <main className="mx-auto w-full max-w-[1680px] px-3 py-3 sm:px-5 sm:py-4 lg:flex lg:h-dvh lg:flex-col lg:overflow-hidden lg:px-6 lg:py-4">
         <div className="shrink-0">
           <NavBar />
         </div>
-        <div className="grid gap-4 md:min-h-0 md:flex-1 md:grid-cols-5">
-          <section ref={chatSectionRef} className="min-w-0 md:col-span-3 md:flex md:min-h-0 md:flex-col">
+        <div className="grid gap-4 md:grid-cols-2 lg:min-h-0 lg:flex-1 lg:grid-cols-12">
+          <section
+            ref={chatSectionRef}
+            className="min-w-0 md:col-span-2 lg:col-span-5 lg:flex lg:min-h-0 lg:flex-col"
+          >
             <AgentChat
               queuedPrompt={queuedPrompt}
               highlighted={chatHighlighted}
@@ -50,18 +53,16 @@ export default function HomePage() {
               onDataChanged={() => setRefreshKey((k) => k + 1)}
             />
           </section>
-          <section className="min-w-0 space-y-4 md:col-span-2 md:grid md:min-h-0 md:grid-rows-2 md:gap-3 md:space-y-0">
-            <div className="min-h-0">
-              <OrdersList
-                refreshKey={refreshKey}
-                onAskAgent={askAgent}
-                onNotify={notify}
-                embedded
-              />
-            </div>
-            <div className="min-h-0">
-              <ReturnsList refreshKey={refreshKey} onNotify={notify} embedded />
-            </div>
+          <section className="min-w-0 lg:col-span-4 lg:flex lg:min-h-0 lg:flex-col">
+            <OrdersList
+              refreshKey={refreshKey}
+              onAskAgent={askAgent}
+              onNotify={notify}
+              embedded
+            />
+          </section>
+          <section className="min-w-0 lg:col-span-3 lg:flex lg:min-h-0 lg:flex-col">
+            <ReturnsList refreshKey={refreshKey} onNotify={notify} embedded />
           </section>
         </div>
 
@@ -70,7 +71,7 @@ export default function HomePage() {
           type="button"
           onClick={focusChat}
           aria-label="Back to support chat"
-          className="fixed bottom-4 right-4 z-40 inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-indigo-600 px-3.5 py-2 text-xs font-semibold text-white shadow-lg transition active:scale-95 hover:bg-indigo-500 md:hidden"
+          className="fixed bottom-4 right-4 z-40 inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-indigo-600 px-3.5 py-2 text-xs font-semibold text-white shadow-lg transition active:scale-95 hover:bg-indigo-500 lg:hidden"
         >
           <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" className="h-4 w-4">
             <path

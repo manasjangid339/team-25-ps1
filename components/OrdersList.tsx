@@ -166,19 +166,19 @@ export default function OrdersList({
     <div
       className={
         isDark
-          ? `overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-sm ${
-              embedded ? "flex flex-col md:h-full md:min-h-0" : ""
+          ? `overflow-hidden rounded-2xl border border-slate-800/90 bg-slate-900/95 shadow-md ${
+              embedded ? "flex flex-col lg:h-full lg:min-h-0" : ""
             }`
           : `overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm ${
-              embedded ? "flex flex-col md:h-full md:min-h-0" : ""
+              embedded ? "flex flex-col lg:h-full lg:min-h-0" : ""
             }`
       }
     >
       <div
         className={
           isDark
-            ? "shrink-0 space-y-2.5 border-b border-slate-800 px-4 py-3"
-            : "shrink-0 space-y-2.5 border-b border-slate-200 px-4 py-3"
+            ? "shrink-0 space-y-2 border-b border-slate-800 px-3.5 py-2.5"
+            : "shrink-0 space-y-2 border-b border-slate-200 px-3.5 py-2.5"
         }
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -222,7 +222,7 @@ export default function OrdersList({
           }
         />
 
-        <div className="flex flex-wrap gap-1.5">
+        <div className={embedded ? "flex items-center gap-1.5 overflow-x-auto pb-0.5" : "flex flex-wrap gap-1.5"}>
           {FILTER_STATUSES.map((opt) => {
             const active = statusFilter === opt.value;
             return (
@@ -247,7 +247,7 @@ export default function OrdersList({
         </div>
       </div>
 
-      <div className={embedded ? "min-h-0 flex-1 space-y-3 overflow-y-auto p-3 max-h-[420px] md:max-h-none" : "space-y-3 p-3"}>
+      <div className={embedded ? "min-h-0 flex-1 space-y-3 overflow-y-auto p-3 max-h-[520px] lg:max-h-none" : "space-y-3 p-3"}>
         {loading && !error && (
           <p className={isDark ? "px-1 py-2 text-sm text-slate-400" : "px-1 py-2 text-sm text-slate-500"}>
             Loading orders...

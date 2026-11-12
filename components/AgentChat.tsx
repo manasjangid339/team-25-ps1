@@ -145,10 +145,10 @@ export default function AgentChat({
     <div
       className={
         isDark
-          ? `flex h-[62dvh] min-h-[380px] max-h-[600px] flex-col overflow-hidden rounded-2xl border bg-slate-900 shadow-sm transition-all duration-300 md:h-full md:max-h-none ${
-              highlighted ? "border-indigo-400 ring-2 ring-indigo-500/40" : "border-slate-800"
+          ? `flex h-[62dvh] min-h-[380px] max-h-[600px] flex-col overflow-hidden rounded-2xl border bg-slate-900/95 shadow-md transition-all duration-300 lg:h-full lg:max-h-none ${
+              highlighted ? "border-indigo-400 ring-2 ring-indigo-500/40" : "border-slate-800/90"
             }`
-          : `flex h-[62dvh] min-h-[380px] max-h-[600px] flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all duration-300 md:h-full md:max-h-none ${
+          : `flex h-[62dvh] min-h-[380px] max-h-[600px] flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all duration-300 lg:h-full lg:max-h-none ${
               highlighted ? "border-indigo-500 ring-2 ring-indigo-500/30" : "border-slate-200"
             }`
       }
