@@ -100,7 +100,7 @@ git config user.email "<email linked to your GitHub account>"
 - [x] **S1 Rules + schemas**
   > Create lib/rules.ts (first line `import "server-only";`) exporting async function checkReturnRule(order_id: number, product_id: string): Promise<{ eligible: boolean; reason: string; last_return_date: string | null }>. Using getSupabase() from lib/supabase.ts and CURRENT_USER_ID from lib/currentUser.ts (create that file with `export const CURRENT_USER_ID = "C001";` only if it does not exist yet), check in order: order exists and customer_id = CURRENT_USER_ID; order status is delivered; product_id is in order_items for that order; products.return_window_days > 0; today (use todayInIndia from lib/dates.ts) ≤ delivered_date + return_window_days; no row in returns for the same order_id and product_id. Return a clear reason for the first failed check, or eligible true. In @lib/schemas.ts add Zod schemas orderIdSchema (int positive) and productIdSchema (string regex ^P\d{3}$). Throw new Error(error.message) on Supabase errors.
   Commit: `"Add return rule and schemas"`.
-- [ ] **S2 Orders API**
+- [x] **S2 Orders API**
   > Create app/api/orders/route.ts following @app/api/tasks/route.ts. GET returns orders for CURRENT_USER_ID with their order_items and product names (select with products(name)), newest order_date first, max 50. Add `export const dynamic = "force-dynamic";`. On error console.error and return status 500 with a short message. No POST.
   Test: localhost:3000/api/orders shows JSON. Commit: `"Add orders API"`.
 - [ ] **S3 Returns API**
