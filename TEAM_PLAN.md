@@ -82,7 +82,7 @@ git config user.email "<email linked to your GitHub account>"
 - [x] **S3 Write tool createReturnRequest**
   > In @lib/agent/tools.ts add write tool createReturnRequest (writes: true). Args: order_id (int positive), product_id (string), reason (string min 3 max 300, "why the customer is returning it"). First call checkReturnRule from lib/rules.ts; if not eligible throw new Error(reason). If eligible insert into returns { order_id, product_id, reason } (status defaults to requested) and return { return_id, order_id, product_id, status }. Description: "Use this when the customer clearly asks to return a product from a delivered order. Call getOrderDetails first to get the real product_id." Add it to the tools array.
   Test: return shoes from a delivered order works; a non-returnable or out-of-window item is refused with the reason. Commit: `"Add createReturnRequest write tool"`.
-- [ ] **S4 Write tool escalateToHuman**
+- [x] **S4 Write tool escalateToHuman**
   > In @lib/agent/tools.ts add write tool escalateToHuman (writes: true). Args: issue (string min 5 max 500), order_id (int positive, optional), priority (enum low|medium|high, "high if the order is late or the customer is upset"). If order_id is given, verify the order belongs to CURRENT_USER_ID else throw "Order not found in your account". Insert into support_tickets { customer_id: CURRENT_USER_ID, order_id, issue, priority } and return { ticket_id, priority, status }. Description: "Use this when the agent cannot solve the problem itself, the order is late, or the customer asks for a human." Add to the tools array.
   Test: "My order is 4 days late and nobody is answering." creates a ticket. Commit: `"Add escalateToHuman write tool"`.
 - [ ] **S5 System prompt**

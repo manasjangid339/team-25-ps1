@@ -145,10 +145,60 @@ export const createReturnRequest = defineTool({
   },
 });
 
+export const escalateToHuman = defineTool({
+  name: "escalateToHuman",
+  description:
+    "Use this when the agent cannot solve the problem itself, the order is late, or the customer asks for a human.",
+  writes: true,
+  schema: z.object({
+    issue: z.string().min(5).max(500).describe("Description of the problem"),
+    order_id: z.number().int().positive().optional().describe("Associated order ID, if any"),
+    priority: z
+      .enum(["low", "medium", "high"])
+      .describe("high if the order is late or the customer is upset"),
+  }),
+  run: async ({ issue, order_id, priority }) => {
+    const supabase = getSupabase();
+
+    if (order_id !== undefined) {
+      const { data: order, error: orderErr } = await supabase
+        .from("orders")
+        .select("id, customer_id")
+        .eq("id", order_id)
+        .maybeSingle();
+
+      if (orderErr) throw new Error(orderErr.message);
+      if (!order || order.customer_id !== CURRENT_USER_ID) {
+        throw new Error("Order not found in your account");
+      }
+    }
+
+    const { data, error } = await supabase
+      .from("support_tickets")
+      .insert({
+        customer_id: CURRENT_USER_ID,
+        order_id: order_id ?? null,
+        issue,
+        priority,
+      })
+      .select("id, priority, status")
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    return {
+      ticket_id: data.id,
+      priority: data.priority,
+      status: data.status,
+    };
+  },
+});
+
 /** Every tool in this list is given to Gemini. */
 export const tools: AgentTool[] = [
   getMyOrders,
   getOrderDetails,
   checkReturnEligibility,
   createReturnRequest,
+  escalateToHuman,
 ];
