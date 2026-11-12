@@ -69,7 +69,7 @@ git config user.email "<email linked to your GitHub account>"
 - [ ] **S7 Final audit** (run at 3:00 and again at 3:25 — see section 8). No commit unless the team agrees on fixes.
 
 ## 5. AADRIT · AI / Agent
-- [ ] **S1 Current user**
+- [x] **S1 Current user**
   > Create lib/currentUser.ts with exactly: `export const CURRENT_USER_ID = "C001";`
   Commit: `"Add current user C001"`.
 - [ ] **S2 Read tools**
