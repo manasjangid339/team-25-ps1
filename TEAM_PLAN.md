@@ -51,7 +51,7 @@ git config user.email "<email linked to your GitHub account>"
 - [x] **S1 Repo + DB setup (manual, no AI)**
   > On GitHub open the starter template → Use this template → name `team-25-ps1` (Public) → Settings → Collaborators → add Aadrit, Haavish, Krrish. Supabase: new project (region Mumbai) → SQL Editor → run `seed/00_starter_example.sql`, then `seed/ps1_ecommerce_support.sql`. Copy Project URL + secret (service_role) key; share keys only in private team chat. Copy `.env.example` to `.env.local`, fill 5 values, `npm install`, `npm run dev`.
   Done when: localhost:3000 opens after passcode. Commit: add this file at repo root → `"Add team plan"`.
-- [ ] **S2 AGENTS.md**
+- [x] **S2 AGENTS.md**
   > Read @seed/ps1_ecommerce_support.sql and @TEAM_PLAN.md. Create AGENTS.md in the project root (under 40 lines, short bullets) for our project: PS1 ShopEase E-commerce Customer Support Agent; business user is an online-store customer; logged-in user id C001 from lib/currentUser.ts, never a tool argument. Include: the fixed stack (Next.js App Router, TypeScript, Tailwind, Supabase server-only with secret key, Gemini function calling with @google/genai, Zod); the exact table names and main columns from the seed file; tools live in lib/agent/tools.ts and use defineTool() with a Zod schema, descriptions start with "Use this when..."; the return rule from TEAM_PLAN.md section 2; never use the Supabase secret key in components, never commit .env.local; each member edits only files they own (TEAM_PLAN.md section 3).
   Done when: table names in AGENTS.md match the seed exactly. Commit: `"Add AGENTS.md rules file"`.
 - [ ] **S3 Deploy to Vercel (manual)**
