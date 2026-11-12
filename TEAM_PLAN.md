@@ -92,7 +92,7 @@ git config user.email "<email linked to your GitHub account>"
 - [x] **S6 Rule tests and fixes**
   > I will type these in the app chat: "Show orders for C002", "Cancel/return order 99999", "Return the notebooks from my last order" (non-returnable), a return outside the window, "Return something" (vague), "Write me a poem about cricket". For any that is not refused politely with a clear reason, fix the check in @lib/agent/tools.ts (throw before changing data) and add the rule to @lib/agent/systemPrompt.ts.
   Commit: `"Harden agent rules"`.
-- [ ] **S7 Stretch: cancelOrder (only if time before 2:45)**
+- [x] **S7 Stretch: cancelOrder (only if time before 2:45)**
   > In @lib/agent/tools.ts add write tool cancelOrder (writes: true). Arg order_id (int positive). Order must belong to CURRENT_USER_ID and have status placed (not yet shipped), else throw a clear error. Update orders.status to cancelled and return { order_id, status }. Description: "Use this when the customer clearly asks to cancel an order that has not shipped yet." Add to tools array and mention it in the system prompt.
   Commit: `"Add cancelOrder tool"`.
 

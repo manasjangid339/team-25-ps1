@@ -194,6 +194,50 @@ export const escalateToHuman = defineTool({
   },
 });
 
+export const cancelOrder = defineTool({
+  name: "cancelOrder",
+  description:
+    "Use this when the customer clearly asks to cancel an order that has not shipped yet.",
+  writes: true,
+  schema: z.object({
+    order_id: z.number().int().positive().describe("order number to cancel, for example 1004"),
+  }),
+  run: async ({ order_id }) => {
+    const supabase = getSupabase();
+
+    const { data: order, error: orderErr } = await supabase
+      .from("orders")
+      .select("id, customer_id, status")
+      .eq("id", order_id)
+      .maybeSingle();
+
+    if (orderErr) throw new Error(orderErr.message);
+    if (!order || order.customer_id !== CURRENT_USER_ID) {
+      throw new Error(`Order ${order_id} was not found in your account`);
+    }
+
+    if (order.status !== "placed") {
+      throw new Error(
+        `Order ${order_id} cannot be cancelled because its status is '${order.status}'. Only orders with status 'placed' (not yet shipped) can be cancelled.`
+      );
+    }
+
+    const { data, error: updateErr } = await supabase
+      .from("orders")
+      .update({ status: "cancelled" })
+      .eq("id", order_id)
+      .select("id, status")
+      .single();
+
+    if (updateErr) throw new Error(updateErr.message);
+
+    return {
+      order_id: data.id,
+      status: data.status,
+    };
+  },
+});
+
 /** Every tool in this list is given to Gemini. */
 export const tools: AgentTool[] = [
   getMyOrders,
@@ -201,4 +245,5 @@ export const tools: AgentTool[] = [
   checkReturnEligibility,
   createReturnRequest,
   escalateToHuman,
+  cancelOrder,
 ];
