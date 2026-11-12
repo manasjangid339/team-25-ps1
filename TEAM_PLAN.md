@@ -72,7 +72,7 @@ git config user.email "<email linked to your GitHub account>"
 - [x] **S1 Current user**
   > Create lib/currentUser.ts with exactly: `export const CURRENT_USER_ID = "C001";`
   Commit: `"Add current user C001"`.
-- [ ] **S2 Read tools**
+- [x] **S2 Read tools**
   > In @lib/agent/tools.ts replace the 3 task example tools with these read tools using defineTool like the existing examples. Import CURRENT_USER_ID from lib/currentUser.ts; never take a customer id as an argument. Descriptions start with "Use this when...". Max 20 rows. Throw new Error(error.message) on a Supabase error.
   > - getMyOrders: no args. Reads orders where customer_id = CURRENT_USER_ID, newest order_date first. Returns id, order_date, status, expected_delivery, delivered_date, total_amount, courier, tracking_number.
   > - getOrderDetails: arg order_id (z.number().int().positive(), "order number, for example 1003"). Reads that order only if customer_id = CURRENT_USER_ID (else throw "Order <id> was not found in your account"), plus order_items joined with products to show product_id, name, category, quantity, unit_price, return_window_days. Also return days_late = days between expected_delivery and today if status is not delivered/cancelled and today > expected_delivery, else 0.
