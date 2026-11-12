@@ -48,7 +48,7 @@ git config user.email "<email linked to your GitHub account>"
 ---
 
 ## 4. MANAS · Team Lead + Database
-- [ ] **S1 Repo + DB setup (manual, no AI)**
+- [x] **S1 Repo + DB setup (manual, no AI)**
   > On GitHub open the starter template → Use this template → name `team-25-ps1` (Public) → Settings → Collaborators → add Aadrit, Haavish, Krrish. Supabase: new project (region Mumbai) → SQL Editor → run `seed/00_starter_example.sql`, then `seed/ps1_ecommerce_support.sql`. Copy Project URL + secret (service_role) key; share keys only in private team chat. Copy `.env.example` to `.env.local`, fill 5 values, `npm install`, `npm run dev`.
   Done when: localhost:3000 opens after passcode. Commit: add this file at repo root → `"Add team plan"`.
 - [ ] **S2 AGENTS.md**
