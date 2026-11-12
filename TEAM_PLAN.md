@@ -117,7 +117,7 @@ git config user.email "<email linked to your GitHub account>"
   Commit: `"Remove starter task API"`.
 
 ## 7. KRRISH · Frontend
-- [ ] **S1 Home page + sample prompts** · Needs: Haavish S2
+- [x] **S1 Home page + sample prompts** · Needs: Haavish S2
   > 1. Create components/OrdersList.tsx following @components/TaskList.tsx: card list from /api/orders showing order id, order date, total (₹), courier, expected/delivered date and product names, with a coloured status badge (placed slate, shipped blue, out_for_delivery amber, delivered green, cancelled red). Reload when refreshKey changes and every 5 seconds. Supabase may return a related row as an object or a one-item array; handle both.
   > 2. In @app/page.tsx replace TaskList with OrdersList and set the title to "ShopEase · Customer support agent" with subtitle "Logged in as Priya Raman (C001)".
   > 3. In @components/AgentChat.tsx set SAMPLE_PROMPTS to: "Where is my order 1003?", "I want to return the shoes from my last order, they are too small.", "My order is 4 days late and nobody is answering."
