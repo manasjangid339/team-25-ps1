@@ -54,13 +54,13 @@ git config user.email "<email linked to your GitHub account>"
 - [x] **S2 AGENTS.md**
   > Read @seed/ps1_ecommerce_support.sql and @TEAM_PLAN.md. Create AGENTS.md in the project root (under 40 lines, short bullets) for our project: PS1 ShopEase E-commerce Customer Support Agent; business user is an online-store customer; logged-in user id C001 from lib/currentUser.ts, never a tool argument. Include: the fixed stack (Next.js App Router, TypeScript, Tailwind, Supabase server-only with secret key, Gemini function calling with @google/genai, Zod); the exact table names and main columns from the seed file; tools live in lib/agent/tools.ts and use defineTool() with a Zod schema, descriptions start with "Use this when..."; the return rule from TEAM_PLAN.md section 2; never use the Supabase secret key in components, never commit .env.local; each member edits only files they own (TEAM_PLAN.md section 3).
   Done when: table names in AGENTS.md match the seed exactly. Commit: `"Add AGENTS.md rules file"`.
-- [ ] **S3 Deploy to Vercel (manual)**
+- [x] **S3 Deploy to Vercel (manual)**
   > vercel.com → log in with GitHub → Add New → Project → import `team-25-ps1` → add the 5 env vars → Deploy. Open `<vercel-url>/api/health`; all must be true.
   Done when: Vercel link opens and login works. No commit.
-- [ ] **S4 Plan review (plan mode, no code)**
+- [x] **S4 Plan review (plan mode, no code)**
   > Read @AGENTS.md, @TEAM_PLAN.md, @lib @app and @seed/ps1_ecommerce_support.sql. Do not write code. Check the plan in TEAM_PLAN.md: every table/column used exists in the seed; there are ≥2 tools and ≥1 writes; no tool takes a customer id; the return rule is enforced in code; file ownership has no overlaps. List any problem in one line each.
   Done when: no problems, or fixes agreed with team. No commit.
-- [ ] **S5 README for judges** · Needs: Aadrit S5, Krrish S3
+- [x] **S5 README for judges** · Needs: Aadrit S5, Krrish S3
   > Rewrite README.md in this exact structure, short, plain English, no keys: `# ShopEase: E-commerce Customer Support Agent` / `Team 25 | PS1 | SRM Agentic AI Hackathon` / `## The problem` (2 lines: online-store customers wait hours for answers about order status, returns and late orders) / `## What our app does` (3–5 bullets) / `## Live demo` (Vercel link: <VERCEL_URL>, Passcode: <PASSCODE>, Try: "I want to return the shoes from my last order, they are too small.") / `## Agent tools` table (Tool | What it does | Reads or writes) for getMyOrders, getOrderDetails, checkReturnEligibility, createReturnRequest, escalateToHuman — read the real descriptions from @lib/agent/tools.ts / `## Database tables` (one line per table in seed/ps1_ecommerce_support.sql) / `## Tech stack` Next.js, React, TypeScript, Tailwind CSS, Supabase, Gemini API (function calling), Zod, Vercel / `## Team` table: Manas | Team Lead + Database; Aadrit | AI / Agent; Haavish | Backend / API; Krrish | Frontend / `## Run it locally` 1. npm install 2. Copy .env.example to .env.local and fill in the keys 3. npm run dev.
   Done when: no placeholders left. Commit: `"Add README"`.
 - [ ] **S6 Slides text (paste into ChatGPT/Gemini, not the repo)**
