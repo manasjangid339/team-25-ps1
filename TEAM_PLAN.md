@@ -106,7 +106,7 @@ git config user.email "<email linked to your GitHub account>"
 - [x] **S3 Returns API**
   > Create app/api/returns/route.ts the same way. GET returns returns rows for orders of CURRENT_USER_ID (filter via orders.customer_id using an inner join), with product name, newest created_at first, max 50. force-dynamic, console.error, 500 on error.
   Commit: `"Add returns API"`.
-- [ ] **S4 Tickets API**
+- [x] **S4 Tickets API**
   > Create app/api/tickets/route.ts the same way. GET returns support_tickets for CURRENT_USER_ID, newest first, max 50. Also add PATCH with body validated by Zod { id: int positive, status: enum open|in_progress|resolved } that updates the ticket status (only tickets of CURRENT_USER_ID) and returns the row; 400 on invalid body, 404 if not found.
   Commit: `"Add tickets API"`.
 - [ ] **S5 Build check**
