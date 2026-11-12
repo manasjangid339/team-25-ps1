@@ -109,7 +109,7 @@ git config user.email "<email linked to your GitHub account>"
 - [x] **S4 Tickets API**
   > Create app/api/tickets/route.ts the same way. GET returns support_tickets for CURRENT_USER_ID, newest first, max 50. Also add PATCH with body validated by Zod { id: int positive, status: enum open|in_progress|resolved } that updates the ticket status (only tickets of CURRENT_USER_ID) and returns the row; 400 on invalid body, 404 if not found.
   Commit: `"Add tickets API"`.
-- [ ] **S5 Build check**
+- [x] **S5 Build check**
   > Run `npm run build`. If it fails, explain each error in one line and fix it only in files I own (TEAM_PLAN.md section 3). If the error is in another member's file, tell me the file and the fix instead. Repeat until it compiles.
   Commit: `"Fix build errors"` (only if files changed).
 - [ ] **S6 Cleanup** · Needs: Krrish S3
