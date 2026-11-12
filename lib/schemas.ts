@@ -23,3 +23,14 @@ export const createTaskSchema = z.object({
   title: z.string().trim().min(1).max(200),
   due_date: isoDate.optional(),
 });
+
+export const orderIdSchema = z
+  .number()
+  .int()
+  .positive()
+  .describe("Order ID, for example 1003");
+
+export const productIdSchema = z
+  .string()
+  .regex(/^P\d{3}$/, "Product ID must be P followed by 3 digits (e.g. P101)")
+  .describe("Product ID like P101");
