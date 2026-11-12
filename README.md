@@ -16,7 +16,7 @@ Online-store customers wait hours for simple answers about order status, returns
 
 ## Live demo
 
-- Vercel link: https://team-25-ps1-9hg4hlpyf-ghatotkach.vercel.app (Production domain: https://team-25-ps1.vercel.app)
+- Vercel link: https://team-25-ps1.vercel.app
 - Passcode: `team25ps1`
 - Try: `"I want to return the shoes from my last order, they are too small."`
 

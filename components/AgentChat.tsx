@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { AgentResult, AgentStep } from "@/lib/agent/types";
+import { readSafeJson, toSmartAppError, type ToastTone } from "./AppToast";
 import { useTheme } from "./ThemeProvider";
 
 type Message = {
@@ -38,9 +39,13 @@ function nowTimeLabel(): string {
 export default function AgentChat({
   onDataChanged,
   queuedPrompt,
+  onNotify,
+  highlighted = false,
 }: {
   onDataChanged?: () => void;
   queuedPrompt?: QueuedPrompt | null;
+  onNotify?: (tone: ToastTone, title: string, message: string) => void;
+  highlighted?: boolean;
 }) {
   const { isDark } = useTheme();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -62,7 +67,11 @@ export default function AgentChat({
 
   async function send(text: string) {
     const trimmed = text.trim();
-    if (!trimmed || loading) return;
+    if (!trimmed) return;
+    if (loading) {
+      onNotify?.("warning", "Please wait", "ShopEase Care is still finishing the previous reply.");
+      return;
+    }
 
     const userMsg: Message = {
       id: nextMsgId.current++,
@@ -84,9 +93,7 @@ export default function AgentChat({
         // Only the last 20 messages are sent, to keep requests small.
         body: JSON.stringify({ messages: next.slice(-20).map(({ role, text }) => ({ role, text })) }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Request failed");
-      const result = data as AgentResult;
+      const result = await readSafeJson<AgentResult>(res);
       const modelMsg: Message = {
         id: nextMsgId.current++,
         role: "model",
@@ -97,7 +104,9 @@ export default function AgentChat({
       setMessages([...next, modelMsg]);
       if (result.steps.some((s) => s.writes && s.ok)) onDataChanged?.();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      const smart = toSmartAppError(err);
+      setError(smart.message);
+      onNotify?.("error", smart.title, smart.message);
     } finally {
       setLoading(false);
       inputRef.current?.focus();
@@ -136,8 +145,12 @@ export default function AgentChat({
     <div
       className={
         isDark
-          ? "flex h-[64dvh] min-h-[380px] max-h-[620px] flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-sm md:h-[74vh] md:max-h-none"
-          : "flex h-[64dvh] min-h-[380px] max-h-[620px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm md:h-[74vh] md:max-h-none"
+          ? `flex h-[62dvh] min-h-[380px] max-h-[600px] flex-col overflow-hidden rounded-2xl border bg-slate-900 shadow-sm transition-all duration-300 md:h-full md:max-h-none ${
+              highlighted ? "border-indigo-400 ring-2 ring-indigo-500/40" : "border-slate-800"
+            }`
+          : `flex h-[62dvh] min-h-[380px] max-h-[600px] flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all duration-300 md:h-full md:max-h-none ${
+              highlighted ? "border-indigo-500 ring-2 ring-indigo-500/30" : "border-slate-200"
+            }`
       }
     >
       {/* Live Support Header */}

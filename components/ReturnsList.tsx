@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { readSafeJson, toSmartAppError, type ToastTone } from "./AppToast";
 import { useTheme } from "./ThemeProvider";
 
 type ProductRef = { name: string };
@@ -59,9 +60,13 @@ function formatDate(iso: string): string {
 export default function ReturnsList({
   refreshKey,
   compactLimit,
+  embedded = false,
+  onNotify,
 }: {
   refreshKey: number;
   compactLimit?: number;
+  embedded?: boolean;
+  onNotify?: (tone: ToastTone, title: string, message: string) => void;
 }) {
   const { isDark } = useTheme();
   const [returnsList, setReturnsList] = useState<ReturnRow[]>([]);
@@ -74,16 +79,17 @@ export default function ReturnsList({
   const loadReturns = useCallback(async () => {
     try {
       const res = await fetch("/api/returns", { cache: "no-store" });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Could not load returns");
+      const data = await readSafeJson<{ returns?: ReturnRow[] }>(res);
       setReturnsList(Array.isArray(data.returns) ? data.returns : []);
       setError("");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not load returns");
+      const smart = toSmartAppError(err);
+      setError(smart.message);
+      onNotify?.("error", smart.title, smart.message);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [onNotify]);
 
   useEffect(() => {
     void loadReturns();
@@ -106,15 +112,19 @@ export default function ReturnsList({
     <div
       className={
         isDark
-          ? "overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-sm"
-          : "overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+          ? `overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-sm ${
+              embedded ? "flex flex-col md:h-full md:min-h-0" : ""
+            }`
+          : `overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm ${
+              embedded ? "flex flex-col md:h-full md:min-h-0" : ""
+            }`
       }
     >
       <div
         className={
           isDark
-            ? "space-y-3 border-b border-slate-800 px-4 py-3"
-            : "space-y-3 border-b border-slate-200 px-4 py-3"
+            ? "shrink-0 space-y-2.5 border-b border-slate-800 px-4 py-3"
+            : "shrink-0 space-y-2.5 border-b border-slate-200 px-4 py-3"
         }
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -174,7 +184,7 @@ export default function ReturnsList({
         </div>
       </div>
 
-      <div className="space-y-3 p-3">
+      <div className={embedded ? "min-h-0 flex-1 space-y-3 overflow-y-auto p-3 max-h-[380px] md:max-h-none" : "space-y-3 p-3"}>
         {loading && !error && (
           <p className={isDark ? "px-1 py-2 text-sm text-slate-400" : "px-1 py-2 text-sm text-slate-500"}>
             Loading returns...

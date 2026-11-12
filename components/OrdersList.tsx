@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { readSafeJson, toSmartAppError, type ToastTone } from "./AppToast";
 import { useTheme } from "./ThemeProvider";
 
 type ProductRef = { name: string };
@@ -89,10 +90,14 @@ export default function OrdersList({
   refreshKey,
   onAskAgent,
   compactLimit,
+  embedded = false,
+  onNotify,
 }: {
   refreshKey: number;
   onAskAgent?: (prompt: string) => void;
   compactLimit?: number;
+  embedded?: boolean;
+  onNotify?: (tone: ToastTone, title: string, message: string) => void;
 }) {
   const { isDark } = useTheme();
   const [orders, setOrders] = useState<Order[]>([]);
@@ -106,16 +111,17 @@ export default function OrdersList({
   const loadOrders = useCallback(async () => {
     try {
       const res = await fetch("/api/orders", { cache: "no-store" });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Could not load orders");
+      const data = await readSafeJson<{ orders?: Order[] }>(res);
       setOrders(Array.isArray(data.orders) ? data.orders : []);
       setError("");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not load orders");
+      const smart = toSmartAppError(err);
+      setError(smart.message);
+      onNotify?.("error", smart.title, smart.message);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [onNotify]);
 
   useEffect(() => {
     void loadOrders();
@@ -160,15 +166,19 @@ export default function OrdersList({
     <div
       className={
         isDark
-          ? "overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-sm"
-          : "overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+          ? `overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-sm ${
+              embedded ? "flex flex-col md:h-full md:min-h-0" : ""
+            }`
+          : `overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm ${
+              embedded ? "flex flex-col md:h-full md:min-h-0" : ""
+            }`
       }
     >
       <div
         className={
           isDark
-            ? "space-y-3 border-b border-slate-800 px-4 py-3"
-            : "space-y-3 border-b border-slate-200 px-4 py-3"
+            ? "shrink-0 space-y-2.5 border-b border-slate-800 px-4 py-3"
+            : "shrink-0 space-y-2.5 border-b border-slate-200 px-4 py-3"
         }
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -237,7 +247,7 @@ export default function OrdersList({
         </div>
       </div>
 
-      <div className="space-y-3 p-3">
+      <div className={embedded ? "min-h-0 flex-1 space-y-3 overflow-y-auto p-3 max-h-[420px] md:max-h-none" : "space-y-3 p-3"}>
         {loading && !error && (
           <p className={isDark ? "px-1 py-2 text-sm text-slate-400" : "px-1 py-2 text-sm text-slate-500"}>
             Loading orders...
@@ -521,11 +531,25 @@ function QuickActionBtn({
       onClick={onClick}
       className={
         isDark
-          ? "min-h-[34px] rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1 text-xs font-medium text-indigo-300 hover:bg-slate-800"
-          : "min-h-[34px] rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-indigo-700 hover:bg-indigo-50"
+          ? "inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1 text-xs font-medium text-indigo-300 transition active:scale-[0.97] hover:border-indigo-500/60 hover:bg-slate-800"
+          : "inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-indigo-700 transition active:scale-[0.97] hover:border-indigo-300 hover:bg-indigo-50"
       }
     >
-      {label}
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 16 16"
+        fill="none"
+        className="h-3.5 w-3.5 shrink-0"
+      >
+        <path
+          d="M9.5 3.5L5 8l4.5 4.5M5.5 8H13"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <span>{label}</span>
     </button>
   );
 }
