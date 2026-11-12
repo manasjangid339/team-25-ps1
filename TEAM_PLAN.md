@@ -129,7 +129,7 @@ git config user.email "<email linked to your GitHub account>"
 - [x] **S3 My Returns page** · Needs: Haavish S3
   > Create components/ReturnsList.tsx (same pattern) from /api/returns: return id, order id, product name, reason, date, status badge (requested amber, approved blue, picked_up indigo, refunded green, rejected red). Create app/returns/page.tsx with NavBar and ReturnsList. Also show ReturnsList under OrdersList on the home page so a new return appears right after the agent creates it.
   Commit: `"Add My Returns page"`.
-- [ ] **S4 Show what the agent did**
+- [x] **S4 Show what the agent did**
   > In @components/AgentChat.tsx make sure every tool step is visible: tool name, a green "writes" badge for write tools, red text if the step failed, and expandable args/result. Do not change how the API is called.
   Commit: `"Improve agent step display"`.
 - [ ] **S5 Phone check**

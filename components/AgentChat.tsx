@@ -126,20 +126,50 @@ export default function AgentChat({ onDataChanged }: { onDataChanged?: () => voi
 /** Shows each tool call so users (and judges) can see what the agent did. */
 function ToolSteps({ steps }: { steps: AgentStep[] }) {
   return (
-    <div className="space-y-1">
+    <div className="space-y-1.5">
       {steps.map((s, i) => (
-        <details key={i} className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1 text-xs">
+        <details
+          key={i}
+          className={
+            s.ok
+              ? "rounded-lg border border-slate-200 bg-slate-50 px-3 py-1 text-xs"
+              : "rounded-lg border border-red-200 bg-red-50 px-3 py-1 text-xs text-red-700"
+          }
+        >
           <summary className="cursor-pointer select-none py-2 leading-5 break-words">
-            <span className={s.ok ? "text-emerald-700" : "text-red-600"}>{s.ok ? "Done" : "Failed"}</span>
+            <span className={s.ok ? "font-medium text-emerald-700" : "font-medium text-red-700"}>
+              {s.ok ? "Done" : "Failed"}
+            </span>
             {" · "}
-            <span className="font-mono font-medium">{s.tool}</span>
+            <span className="font-mono font-semibold">{s.tool}</span>
             {s.writes && (
-              <span className="ml-2 inline-block rounded bg-amber-100 px-1.5 py-0.5 text-amber-800">writes data</span>
+              <span className="ml-2 inline-block rounded bg-emerald-100 px-1.5 py-0.5 font-medium text-emerald-800">
+                writes
+              </span>
             )}
           </summary>
-          <pre className="mt-1 overflow-x-auto whitespace-pre-wrap break-all pb-1 text-slate-600">
-            {JSON.stringify({ args: s.args, ...(s.ok ? { result: s.result } : { error: s.error }) }, null, 2)}
-          </pre>
+
+          <div className="mt-1 space-y-2 border-t border-slate-200/70 pt-2 pb-1">
+            <div>
+              <p className="font-medium text-slate-600">Args</p>
+              <pre className="mt-0.5 overflow-x-auto whitespace-pre-wrap break-all text-slate-700">
+                {JSON.stringify(s.args ?? {}, null, 2)}
+              </pre>
+            </div>
+            {s.ok ? (
+              <div>
+                <p className="font-medium text-slate-600">Result</p>
+                <pre className="mt-0.5 overflow-x-auto whitespace-pre-wrap break-all text-slate-700">
+                  {JSON.stringify(s.result ?? null, null, 2)}
+                </pre>
+              </div>
+            ) : (
+              <div>
+                <p className="font-medium text-red-700">Error</p>
+                <p className="mt-0.5 whitespace-pre-wrap break-words text-red-700">{s.error ?? "Tool failed"}</p>
+              </div>
+            )}
+          </div>
         </details>
       ))}
     </div>
